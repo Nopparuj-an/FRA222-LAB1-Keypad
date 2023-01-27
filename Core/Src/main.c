@@ -337,6 +337,8 @@ static void MX_GPIO_Init(void) {
 void ReadMatrixButton_1Row() {
 	static uint8_t X = 0;
 	register int i;
+
+	// scan for pin that is low
 	for (i = 0; i < 4; i++) {
 		if (HAL_GPIO_ReadPin(L[i].PORT, L[i].PIN)) {
 			ButtonMatrix &= ~(1 << (X * 4 + i));
@@ -344,6 +346,8 @@ void ReadMatrixButton_1Row() {
 			ButtonMatrix |= 1 << (X * 4 + i);
 		}
 	}
+
+	// set next pin to read
 	HAL_GPIO_WritePin(R[X].PORT, R[X].PIN, 1);
 	HAL_GPIO_WritePin(R[(X + 1) % 4].PORT, R[(X + 1) % 4].PIN, 0);
 	X++;
