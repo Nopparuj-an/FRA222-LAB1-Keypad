@@ -164,7 +164,20 @@ int main(void) {
 				password += key;
 			}
 
-			// other function buttons
+			// other clear and backspace
+			if (key == 13) {
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
+				password = 0;
+			} else if (key == 14) {
+				password /= 10;
+			}
+
+			// ok button
+			if(key == 16){
+				if(password == 64340500034){
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
+				}
+			}
 
 		}
 
