@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <math.h>
+#include <stdbool.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -61,7 +62,7 @@ uint16_t ButtonMatrix = 0;
 uint16_t ButtonMatrix_L = 0; // Last value
 
 // current password buffer
-uint32_t password = 0;
+uint64_t password = 0;
 
 /* USER CODE END PV */
 
@@ -124,8 +125,47 @@ int main(void) {
 		// detect changes (must not run when release key)
 		if (ButtonMatrix_L != ButtonMatrix && ButtonMatrix != 0) {
 			uint8_t key = log2(ButtonMatrix) + 1;
-			password *= 10;
-			password += key;
+
+			// check if key is a number
+			if (key > 0 && key < 12 && key != 8) {
+				switch (key) {
+				case 1:
+					key = 7;
+					break;
+				case 2:
+					key = 4;
+					break;
+				case 3:
+					key = 1;
+					break;
+				case 4:
+					key = 0;
+					break;
+				case 5:
+					key = 8;
+					break;
+				case 6:
+					key = 5;
+					break;
+				case 7:
+					key = 2;
+					break;
+				case 9:
+					key = 9;
+					break;
+				case 10:
+					key = 6;
+					break;
+				case 11:
+					key = 3;
+					break;
+				}
+				password *= 10;
+				password += key;
+			}
+
+			// other function buttons
+
 		}
 
 		// update last value
