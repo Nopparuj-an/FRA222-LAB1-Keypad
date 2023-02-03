@@ -62,7 +62,7 @@ uint16_t ButtonMatrix = 0;
 uint16_t ButtonMatrix_L = 0; // Last value
 
 // current password buffer
-uint64_t password = 0;
+uint64_t password = 1;
 
 /* USER CODE END PV */
 
@@ -167,14 +167,18 @@ int main(void) {
 			// other clear and backspace
 			if (key == 13) {
 				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
-				password = 0;
+				password = 1;
 			} else if (key == 14) {
 				password /= 10;
 			}
 
+			if(!password){
+				password = 1;
+			}
+
 			// ok button
 			if(key == 16){
-				if(password == 64340500034){
+				if(password == 164340500034){
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
 				}
 			}
